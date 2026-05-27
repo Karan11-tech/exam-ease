@@ -3,9 +3,9 @@ What it does
 
 For students
 
--Sign up / login with OTP email verification and role-based access (Student / Admin)
--Take online exams with practice mode and results tracking
--Gamified learning, personal notes, and downloadable study materials
+-Sign up / login with OTP email verification and role-based access (Student / Admin).
+-Take online exams with practice mode and results tracking.
+-Gamified learning, personal notes, and downloadable study materials.
 -Doubts & discussion forum
 -Career & internships section
 -Feedback & assessment
