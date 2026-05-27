@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ExamEase</title>
+    <link rel="stylesheet" href="admin-dashboard.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="background"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <h2><i class='bx bxl-xing'></i> ExamEase Admin</h2>
+            <button class="close-sidebar" onclick="toggleAdminSidebar()"><i class='bx bx-x'></i></button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#admin-overview" class="nav-item active" onclick="showAdminSection('admin-overview')">
+                <i class='bx bx-grid-alt'></i> Overview
+            </a>
+            <a href="#admin-exams" class="nav-item" onclick="showAdminSection('admin-exams')">
+                <i class='bx bx-clipboard'></i> Exams
+            </a>
+            <a href="#admin-students" class="nav-item" onclick="showAdminSection('admin-students')">
+                <i class='bx bx-user'></i> User Management
+            </a>
+            <a href="#admin-materials" class="nav-item" onclick="showAdminSection('admin-materials')">
+                <i class='bx bx-book'></i> Study Materials
+            </a>
+            <a href="#admin-doubts" class="nav-item" onclick="showAdminSection('admin-doubts')">
+                <i class='bx bx-message-dots'></i> Doubts & Feedback
+            </a>
+            <a href="#admin-reporting" class="nav-item" onclick="showAdminSection('admin-reporting')">
+                <i class='bx bx-bar-chart'></i> Reports
+            </a>
+            <a href="#admin-content" class="nav-item" onclick="showAdminSection('admin-content')">
+                <i class='bx bx-upload'></i> Content & Announcements
+            </a>
+            <a href="#admin-security" class="nav-item" onclick="showAdminSection('admin-security')">
+                <i class='bx bx-shield'></i> Security & Audit
+            </a>
+            <a href="#admin-notifications" class="nav-item" onclick="showAdminSection('admin-notifications')">
+                <i class='bx bx-bell'></i> Notifications
+            </a>
+            <a href="#" class="nav-item logout-item" onclick="adminLogout()">
+                <i class='bx bx-log-out'></i> Logout
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top bar -->
+        <header class="top-bar">
+            <button class="menu-toggle" onclick="toggleAdminSidebar()"><i class='bx bx-menu'></i></button>
+            <div class="top-bar-right">
+                <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Toggle language">
+                    <span id="adminLangToggleLabel">EN</span>
+                </button>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                    <i class='bx bx-moon' id="adminThemeToggleIcon"></i>
+                </button>
+                <span class="admin-name" id="adminNameDisplay">Admin</span>
+                <div class="user-profile-mini">
+                    <img id="adminPhotoMini" class="profile-photo-img" alt="Admin photo" style="display:none;">
+                    <span id="adminInitials">AD</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Overview -->
+        <section id="admin-overview" class="admin-section active">
+            <div class="welcome-card">
+                <div class="welcome-content">
+                    <h1>Welcome, <span id="adminNameHeading">Admin</span> 👋</h1>
+                    <p class="welcome-subtitle">Manage exams, students and results from one place.</p>
+                </div>
+                <div class="overview-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class='bx bx-clipboard'></i></div>
+                        <div class="stat-info">
+                            <h3 id="adminTotalExams">0</h3>
+                            <p>Total Exams</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class='bx bx-user'></i></div>
+                        <div class="stat-info">
+                            <h3 id="adminTotalStudents">0</h3>
+                            <p>Registered Students</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class='bx bx-bar-chart-alt-2'></i></div>
+                        <div class="stat-info">
+                            <h3 id="adminActiveExams">0</h3>
+                            <p>Active Exams</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-profile-photo-upload">
+                    <label class="admin-profile-photo-preview photo-upload-label" id="adminPhotoUploadLabel">
+                        <img id="adminPhotoPreview" class="profile-photo-img" alt="Admin photo" style="display:none;">
+                        <span id="adminPhotoPreviewInitials">AD</span>
+                        <div class="photo-upload-overlay" aria-hidden="true">
+                            <i class='bx bx-camera'></i>
+                            <span>Change</span>
+                        </div>
+                        <input type="file" id="adminPhotoUpload" accept="image/*" hidden>
+                    </label>
+                    <p class="form-hint">Click the photo to upload or update it.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exams Management -->
+        <section id="admin-exams" class="admin-section">
+            <h2><i class='bx bx-clipboard'></i> Exam Management</h2>
+
+            <div class="exams-layout">
+                <div class="exam-form-card">
+                    <h3>Add Exam</h3>
+                    <form id="examForm">
+                        <input type="hidden" id="examId">
+                        <div class="form-row">
+                            <label for="examTitle">Exam Title</label>
+                            <input type="text" id="examTitle" required placeholder="e.g. OS Mock Test 1">
+                        </div>
+                        <div class="form-row">
+                            <label for="examSubjects">Subjects (comma separated)</label>
+                            <input type="text" id="examSubjects" placeholder="OS, DBMS, CN">
+                        </div>
+                        <div class="form-row two-cols">
+                            <div>
+                                <label for="examType">Exam Type</label>
+                                <select id="examType">
+                                    <option value="practice">Practice Test</option>
+                                    <option value="mock">Mock Test (secure)</option>
+                                </select>
+                                <p class="form-hint" id="examTypeHint" style="margin-top: 6px; font-size: 12px; color: rgba(255,255,255,0.7);">
+                                    <span id="examTypeDesc">Practice: No camera, 2 attempts allowed</span>
+                                </p>
+                            </div>
+                            <div>
+                                <label for="examDifficulty">Difficulty</label>
+                                <select id="examDifficulty">
+                                    <option value="mixed">Mixed</option>
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row two-cols">
+                            <div>
+                                <label for="examQuestionCount">Number of Questions</label>
+                                <input type="number" id="examQuestionCount" min="1" value="10" required>
+                            </div>
+                            <div>
+                                <label for="examTotalMarks">Total Marks</label>
+                                <input type="number" id="examTotalMarks" min="1" value="10" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label for="examDuration">Duration (minutes)</label>
+                            <input type="number" id="examDuration" min="1" value="30" required>
+                        </div>
+                        <div class="form-row">
+                            <label>Question Types</label>
+                            <div class="inline-checks">
+                                <label class="check-pill"><input type="checkbox" id="allowMCQ" checked> MCQ (single correct)</label>
+                                <label class="check-pill"><input type="checkbox" id="allowMSQ" checked> MSQ (multiple correct)</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label for="examActive">Active</label>
+                            <select id="examActive">
+                                <option value="1">Active (visible to students)</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="primary-btn" id="saveExamBtn">Create Exam</button>
+                        <button type="button" class="secondary-btn" id="resetExamBtn" onclick="resetExamForm()">Clear</button>
+                    </form>
+                </div>
+
+                <div class="exam-table-card">
+                    <div class="exam-table-header">
+                        <h3>All Exams</h3>
+                    </div>
+                    <div class="exam-table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Subjects</th>
+                                    <th>Type</th>
+                                    <th>Duration</th>
+                                    <th>Marks</th>
+                                    <th>Difficulty</th>
+                                    <th>Active</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminExamsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exams-layout" style="margin-top: 18px;">
+                <div class="exam-form-card" style="width: 100%;">
+                    <h3><i class='bx bx-plus-circle'></i> Question Management</h3>
+                    <p class="section-desc">Select an exam, then add questions dynamically. Each question can be saved as draft, edited, or deleted.</p>
+                    
+                    <!-- Exam Selection & Info -->
+                    <div class="question-exam-header" style="background: rgba(78,212,66,0.1); border: 1px solid rgba(78,212,66,0.2); border-radius: 10px; padding: 16px; margin-bottom: 20px;">
+                        <div class="form-row">
+                            <label for="questionExamSelect"><strong>Select Exam</strong></label>
+                            <select id="questionExamSelect" class="admin-exam-select">
+                                <option value="">-- Select an exam first --</option>
+                            </select>
+                        </div>
+                        <div id="questionExamInfo" style="display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1);">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; font-size: 13px;">
+                                <div><strong>Type:</strong> <span id="examInfoType">--</span></div>
+                                <div><strong>Subjects:</strong> <span id="examInfoSubjects">--</span></div>
+                                <div><strong>Duration:</strong> <span id="examInfoDuration">--</span> min</div>
+                                <div><strong>Total Questions:</strong> <span id="examInfoQuestionCount">--</span></div>
+                                <div><strong>Total Marks:</strong> <span id="examInfoMarks">--</span></div>
+                            </div>
+                            <div style="margin-top: 8px; padding: 8px; background: rgba(255,193,7,0.1); border-radius: 6px; font-size: 12px; color: rgba(255,255,255,0.9);">
+                                <strong id="examInfoSecurityNote">Practice Test:</strong> <span id="examInfoSecurityDesc">No camera, no tab-switch detection, 2 attempts allowed.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bulk Upload Section -->
+                    <div class="bulk-upload-section" style="background: rgba(23,75,189,0.1); border: 1px solid rgba(23,75,189,0.2); border-radius: 10px; padding: 16px; margin-bottom: 20px;">
+                        <h4 style="color: rgba(255,255,255,0.95); margin-bottom: 12px; font-size: 15px;"><i class='bx bx-upload'></i> Bulk Upload</h4>
+                        <div class="form-row">
+                            <label>Upload Questions (JSON or CSV)</label>
+                            <input type="file" id="questionJsonUpload" accept=".json,.csv,application/json,text/csv" style="margin-bottom: 8px;">
+                            <div style="display: flex; gap: 8px;">
+                                <button type="button" class="secondary-btn" id="importQuestionsBtn" style="flex: 1;"><i class='bx bx-import'></i> Import JSON/CSV</button>
+                                <button type="button" class="secondary-btn" id="downloadTemplateBtn" style="flex: 1;"><i class='bx bx-download'></i> Download Template</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Questions List -->
+                    <div id="questionsListContainer" style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <h4 style="color: rgba(255,255,255,0.95); font-size: 15px;"><i class='bx bx-list-ul'></i> Questions (<span id="questionsCount">0</span>)</h4>
+                            <button type="button" class="primary-btn" id="addNewQuestionBtn" style="padding: 8px 16px; font-size: 13px;"><i class='bx bx-plus'></i> Add New Question</button>
+                        </div>
+                        <div id="questionsList" style="display: flex; flex-direction: column; gap: 16px;">
+                            <!-- Questions will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="exam-table-card">
+                    <h3>Attempts & Violations</h3>
+                    <p class="section-desc">View student attempts and flagged violations (mock tests).</p>
+                    <div id="adminAttemptsScroll" class="admin-scroll-wrap admin-attempts-scroll">
+                        <div id="adminAttemptsList"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- User Management -->
+        <section id="admin-students" class="admin-section">
+            <h2><i class='bx bx-user'></i> User Management</h2>
+            <p class="section-desc">View, approve, block, or reset student accounts.</p>
+            <div class="students-table-card">
+                <div class="exam-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Account Status</th>
+                                <th>Last Login</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminStudentsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Study Materials -->
+        <section id="admin-materials" class="admin-section">
+            <h2><i class='bx bx-book'></i> Study Materials</h2>
+            <p class="section-desc">Upload PDFs or create subject-wise resources (OS, DBMS, CN, etc.). Students can preview and download from their dashboard.</p>
+            <div class="materials-admin-layout">
+                <div class="exam-form-card">
+                    <h3>Add / Edit Material</h3>
+                    <form id="materialForm">
+                        <input type="hidden" id="materialId">
+                        <div class="form-row">
+                            <label>Subject / Title <span class="required">*</span></label>
+                            <input type="text" id="materialTitle" required placeholder="e.g. Operating Systems, DBMS, CN, Algebra">
+                        </div>
+                        <div class="form-row">
+                            <label>Description</label>
+                            <textarea id="materialDesc" rows="2" placeholder="Short description for students"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <label>Category</label>
+                            <select id="materialType">
+                                <option value="notes">Revision Notes</option>
+                                <option value="lectures">Recorded Lecture</option>
+                                <option value="resources">Resource</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label>Upload PDF (optional)</label>
+                            <input type="file" id="materialPdf" accept=".pdf,application/pdf">
+                            <p class="form-hint">If you upload a PDF, students can download it. You can add optional reference links below.</p>
+                        </div>
+                        <div class="form-row">
+                            <label>Reference / Recommended links (one per line)</label>
+                            <textarea id="materialLinks" rows="2" placeholder="https://..."></textarea>
+                        </div>
+                        <button type="submit" class="primary-btn">Save Material</button>
+                        <button type="button" class="secondary-btn" onclick="resetMaterialForm()">Clear</button>
+                    </form>
+                </div>
+                <div class="exam-table-card">
+                    <h3>Current Materials</h3>
+                    <div class="materials-tabs-admin">
+                        <button type="button" class="mat-tab active" data-tab="notes" onclick="switchAdminMaterialTab('notes')">Notes</button>
+                        <button type="button" class="mat-tab" data-tab="lectures" onclick="switchAdminMaterialTab('lectures')">Lectures</button>
+                        <button type="button" class="mat-tab" data-tab="resources" onclick="switchAdminMaterialTab('resources')">Resources</button>
+                    </div>
+                    <div id="adminMaterialsList" class="materials-list-admin"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Doubts & Feedback Management -->
+        <section id="admin-doubts" class="admin-section">
+            <h2><i class='bx bx-message-dots'></i> Doubts & Feedback Management</h2>
+            <p class="section-desc">Handle student doubts and feedback in one place. Reply and update status to notify students.</p>
+            <div class="doubts-feedback-tabs">
+                <button type="button" class="df-tab active" data-tab="pending-doubts">Pending Doubts</button>
+                <button type="button" class="df-tab" data-tab="student-feedback">Student Feedback</button>
+            </div>
+            <div class="df-panel active" id="panel-pending-doubts">
+                <div class="doubts-list-card" id="adminDoubtsList"></div>
+            </div>
+            <div class="df-panel" id="panel-student-feedback">
+                <div class="feedback-list-card" id="adminFeedbackList"></div>
+            </div>
+        </section>
+
+        <!-- Reports -->
+        <section id="admin-reporting" class="admin-section">
+            <h2><i class='bx bx-bar-chart'></i> Reports & Analytics</h2>
+            <p class="section-desc">Attendance, pass percentages, and improvement trends.</p>
+            <div class="reporting-grid">
+                <div class="report-card">
+                    <h3><i class='bx bx-user-check'></i> Engagement Overview</h3>
+                    <div class="report-stat" id="reportTotalStudents">0</div>
+                    <p>Registered students</p>
+                    <div class="report-stat" id="reportActiveThisWeek">0</div>
+                    <p>Active (login) in last 7 days</p>
+                </div>
+                <div class="report-card">
+                    <h3><i class='bx bx-trending-up'></i> Pass Percentage</h3>
+                    <div class="report-stat" id="reportPassPct">--%</div>
+                    <p>Overall pass rate (from results)</p>
+                </div>
+                <div class="report-card">
+                    <h3><i class='bx bx-line-chart'></i> Improvement Trends</h3>
+                    <p class="report-hint" id="reportTrendsHint">Complete more exams to see score trends over time.</p>
+                </div>
+                <div class="report-card">
+                    <h3><i class='bx bx-clipboard'></i> Exam Performance</h3>
+                    <div id="reportExamPerformance"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content & Announcements -->
+        <section id="admin-content" class="admin-section">
+            <h2><i class='bx bx-upload'></i> Content & Announcements</h2>
+            <p class="section-desc">Upload notes, videos, and post announcements to all students.</p>
+            <div class="content-layout">
+                <div class="exam-form-card">
+                    <h3>Post Announcement</h3>
+                    <form id="announcementForm">
+                        <div class="form-row">
+                            <label>Title</label>
+                            <input type="text" id="announcementTitle" required placeholder="Announcement title (e.g., OS Mock Test Schedule)">
+                        </div>
+                        <div class="form-row">
+                            <label>Description</label>
+                            <textarea id="announcementMessage" rows="3" required placeholder="Short description for all students"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <label>Category</label>
+                            <select id="announcementCategory" required>
+                                <option value="exam">Exam / Schedule</option>
+                                <option value="study">Study Material / Content</option>
+                                <option value="career">Career / Internship</option>
+                                <option value="general">General / System Update</option>
+                            </select>
+                            <p class="form-hint">Use <strong>Exam / Schedule</strong> for dates, timetables, mock tests, and exam updates—those appear automatically on the student dashboard under <strong>Upcoming Exams</strong> (not only in the announcements list).</p>
+                        </div>
+                        <div class="form-row">
+                            <label>Optional Link or Attachment URL</label>
+                            <input type="url" id="announcementLink" placeholder="https://example.com/details-or-material">
+                        </div>
+                        <button type="submit" class="primary-btn"><i class='bx bx-megaphone'></i> Post Announcement</button>
+                    </form>
+                </div>
+                <div class="exam-table-card">
+                    <h3>Recent Announcements</h3>
+                    <div id="announcementsList"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security & Audit -->
+        <section id="admin-security" class="admin-section">
+            <h2><i class='bx bx-shield'></i> Security & Audit</h2>
+            <p class="section-desc">Login history and audit logs for system integrity.</p>
+            <div class="security-layout">
+                <div class="report-card">
+                    <h3><i class='bx bx-history'></i> Login History</h3>
+                    <div class="audit-list admin-scroll-wrap" id="loginHistoryList"></div>
+                </div>
+                <div class="report-card">
+                    <h3><i class='bx bx-list-check'></i> Audit Log</h3>
+                    <div class="audit-list admin-scroll-wrap" id="auditLogList"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notifications -->
+        <section id="admin-notifications" class="admin-section">
+            <h2><i class='bx bx-bell'></i> Notifications</h2>
+            <p class="section-desc">A single timeline of student doubts, feedback, and announcements—newest first.</p>
+            <div class="notification-card admin-activity-feed-card">
+                <div id="adminUnifiedActivityFeed" class="admin-scroll-wrap admin-activity-feed"></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="admin-dashboard.js"></script>
+</body>
+</html>
+

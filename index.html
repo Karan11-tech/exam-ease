@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ExamEase</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="alert.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="background"></div>
+
+    <!-- Main navigation - top bar -->
+    <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="help.html">Help</a>
+
+        <!-- ExamEase logo on right side of nav -->
+        <span class="nav-logo">
+            <i class='bx bxl-xing'></i>
+            <span>ExamEase</span>
+        </span>
+    </nav>
+
+    <div class="container">
+        <!-- Decorative corner elements -->
+        <div class="corner-decoration top-left"></div>
+        <div class="corner-decoration top-right"></div>
+        <div class="corner-decoration bottom-left"></div>
+        <div class="corner-decoration bottom-right"></div>
+
+        <div class="item">
+            <h2 class="logo"><i class='bx bxl-xing'></i>ExamEase</h2>
+            <div class="text-item">
+                <h2>Welcome! <br><span>to ExamEase</span></h2>
+                <p>Smart online examination platform designed for seamless learning experiences.</p>
+                <div class="social-icon">
+                    <a href="https://www.facebook.com/" aria-label="Facebook"><i class='bx bxl-facebook'></i></a>
+                    <a href="https://x.com/" aria-label="Twitter"><i class='bx bxl-twitter'></i></a>
+                    <a href="https://www.youtube.com/" aria-label="YouTube"><i class='bx bxl-youtube'></i></a>
+                    <a href="https://www.instagram.com" aria-label="Instagram"><i class='bx bxl-instagram'></i></a>
+                    <a href="https://in.linkedin.com/" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decorative divider -->
+        <div class="section-divider"></div>
+
+        <div class="login-section">
+            <!-- Login Form -->
+            <div class="form-box login">
+                <form id="loginForm">
+                    <div class="form-header">
+                        <h2 id="loginTitle">Student Sign In</h2>
+                        <p class="form-subtitle" id="loginSubtitle">Login to access your student dashboard.</p>
+                        <div class="role-toggle">
+                            <button type="button" id="studentModeBtn" class="active">Student</button>
+                            <button type="button" id="adminModeBtn">Admin</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-box">
+                            <span class="icon"><i class='bx bxs-envelope'></i></span>
+                            <input type="email" id="email" required>
+                            <label>Email</label>
+                        </div>
+
+                        <div class="input-box" style="position: relative;">
+                            <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                            <input type="password" id="password" required>
+                            <label>Password</label>
+                            <span id="toggleLoginPassword" class="password-toggle" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); cursor: pointer; user-select: none;">👁️</span>
+                        </div>
+                    </div>
+
+                    <div class="remember-password">
+                        <label><input type="checkbox" id="rememberMe"> Remember Me</label>
+                        <a href="forgot-password.html" id="forgotPassword">Forget Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn">Login</button>
+                    <p id="loginError" class="error-message"></p>
+
+                    <div class="create-account">
+                        <p>Create A New Account? <a href="#" class="register-link">Sign Up</a></p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Sign-Up Form -->
+            <div class="form-box register">
+                <form id="signupForm">
+                    <div class="form-header">
+                        <h2 id="signupTitle">Student Sign Up</h2>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-box">
+                            <span class="icon"><i class='bx bxs-user'></i></span>
+                            <input type="text" id="signupUsername" required>
+                            <label>Username</label>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="icon"><i class='bx bxs-envelope'></i></span>
+                            <input type="email" id="signupEmail" required>
+                            <label>Email</label>
+                        </div>
+
+                        <div class="input-box" style="position: relative;">
+                            <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                            <input type="password" id="signupPassword" required>
+                            <label>Password</label>
+                            <span id="togglePassword" class="password-toggle" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); cursor: pointer; user-select: none;">👁️</span>
+                        </div>
+
+                        <div class="password-strength-container">
+                            <progress id="strength-bar" max="4" value="0"></progress>
+                            <p id="strength-text"></p>
+                        </div>
+
+                        <div class="input-box">
+                            <span class="icon"><i class='bx bxs-shield'></i></span>
+                            <input type="text" id="signupOTP" required>
+                            <label>OTP</label>
+                        </div>
+                    </div>
+
+                    <div class="remember-password">
+                        <label><input type="checkbox" required> I agree to the terms</label>
+                    </div>
+
+                    <button type="submit" class="btn">Sign Up</button>
+                    <p id="signupError" class="error-message"></p>
+
+                    <div class="create-account">
+                        <p>Already Have An Account? <a href="#" class="login-link">Sign In</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔗 Scripts -->
+    <script src="index.js" defer></script>
+    <script src="alert.js" defer></script>
+</body>
+</html>

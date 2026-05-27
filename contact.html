@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - ExamEase</title>
+    <link rel="stylesheet" href="alert.css">
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,500&display=swap');
+        body {
+    font-family: "poppins",sans-serif;
+    margin: 0;
+    padding: 0;
+    color: white;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(backgroun3.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(4px);
+    z-index: -2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+}
+
+header {
+    text-align: center;
+    font-family: "poppins",sans-serif;
+
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+nav ul {
+    font-family: "poppins",sans-serif;
+
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    font-family: "poppins",sans-serif;
+
+    display: inline;
+    margin: 0 15px;
+}
+
+
+nav ul li a {
+    font-family: "poppins",sans-serif;
+
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+nav ul li a:hover {
+    
+    color: #4ed442;
+}
+.contact-content, .help-content {
+    padding: 40px;
+    text-align: center;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: auto;
+}
+
+form input, form textarea {
+    margin: 10px 0;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+form button {
+    background: #174bbd;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+details {
+    margin: 10px 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+}
+
+.about-content {
+    font-family: "poppins",sans-serif;
+
+    padding: 40px;
+    text-align: center;
+}
+
+
+.about-content h2 {
+    font-family: "poppins",sans-serif;
+
+    color: #174bbd;
+}
+
+.about-content ul {
+    font-family: "poppins",sans-serif;
+
+    list-style: none;
+    padding: 0;
+}
+
+.about-content ul li {
+    font-family: "poppins",sans-serif;
+
+    background: #174bbd;
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+footer {
+    font-family: "poppins",sans-serif;
+
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+}
+</style>
+</head>
+<body>
+    <header>
+        <h1>Contact Us</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="contact-content">
+        <h2>Get in Touch</h2>
+        <p>If you have any questions, feel free to reach out!</p>
+
+        <form id="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Your Name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Your Email" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" placeholder="Your Message" required></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 ExamEase. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Decide which backend URL to use:
+            // - When using VS Code Live Server (127.0.0.1:5500), call the Node server on localhost:5000
+            // - When deployed (same origin), use relative paths
+            const API_BASE =
+                window.location.port === "5500"
+                    ? "http://localhost:5000"
+                    : "";
+            const contactForm = document.getElementById("contact-form");
+    
+            contactForm.addEventListener("submit", async function (e) {
+                e.preventDefault();
+    
+                const name = document.getElementById("name").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const message = document.getElementById("message").value.trim();
+    
+                if (!name || !email || !message) {
+                    showCustomAlert("Please fill in all fields.", "error");
+                    return;
+                }
+    
+                try {
+                    // Use same-origin API in production, localhost:5000 when using Live Server
+                    const response = await fetch(API_BASE + "/send-email", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ name, email, message })
+                    });
+    
+                    const data = await response.json();
+    
+                    if (response.ok) {
+                        showCustomAlert(data.message, "success");
+                        contactForm.reset();
+                    } else {
+                        showCustomAlert(data.message || "Error sending message.", "error");
+                    }
+                } catch (error) {
+                    showCustomAlert("Error sending message. Please try again later.", "error");
+                    console.error("Error:", error);
+                }
+            });
+    
+            function showCustomAlert(message, type) {
+                const alertBox = document.createElement("div");
+                alertBox.textContent = message;
+                alertBox.style.position = "fixed";
+                alertBox.style.top = "18px";
+                alertBox.style.left = "50%";
+                alertBox.style.transform = "translateX(-50%)";
+                alertBox.style.minWidth = "280px";
+                alertBox.style.maxWidth = "520px";
+                alertBox.style.padding = "14px 26px";
+                alertBox.style.background = type === "success"
+                    ? "linear-gradient(135deg, #174bbd 0%, #1e5cd4 50%, #4ed442 100%)"
+                    : "linear-gradient(135deg, #4e1b1b 0%, #b03030 40%, #ff5c5c 100%)";
+                alertBox.style.color = "white";
+                alertBox.style.borderRadius = "999px";
+                alertBox.style.boxShadow = "0 12px 30px rgba(0,0,0,0.5)";
+                alertBox.style.border = "1px solid rgba(255, 255, 255, 0.18)";
+                alertBox.style.backdropFilter = "blur(14px)";
+                alertBox.style.fontFamily = "Poppins, sans-serif";
+                alertBox.style.fontWeight = "500";
+                alertBox.style.fontSize = "14px";
+                alertBox.style.zIndex = "9999";
+                alertBox.style.display = "flex";
+                alertBox.style.alignItems = "center";
+                alertBox.style.gap = "10px";
+    
+                // Add a checkmark for success or cross for error
+                const icon = document.createElement("span");
+                icon.innerHTML = type === "success" ? "&#10003;" : "&#10060;";
+                icon.style.fontSize = "20px";
+                alertBox.prepend(icon);
+    
+                document.body.appendChild(alertBox);
+    
+                setTimeout(() => {
+                    alertBox.remove();
+                }, 3000);
+            }
+        });
+    </script>
+    
+    
+
+</body>
+</html>

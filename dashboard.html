@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - ExamEase</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="alert.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="background"></div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class='bx bxl-xing'></i> ExamEase</h2>
+            <button class="close-sidebar" onclick="toggleSidebar()"><i class='bx bx-x'></i></button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active" onclick="showSection('dashboard')">
+                <i class='bx bx-home'></i> <span data-i18n="nav.dashboard">Dashboard</span>
+            </a>
+            <a href="#practice" class="nav-item" onclick="showSection('practice')">
+                <i class='bx bx-book'></i> <span data-i18n="nav.practice">Practice</span>
+            </a>
+            <a href="#gamified" class="nav-item" onclick="showSection('gamified')">
+                <i class='bx bx-joystick'></i> <span data-i18n="nav.gamified">Gamified Learning</span>
+            </a>
+            <a href="#notes" class="nav-item" onclick="showSection('notes')">
+                <i class='bx bx-notepad'></i> <span data-i18n="nav.notes">My Notes</span>
+            </a>
+            <a href="#discussion" class="nav-item" onclick="showSection('discussion')">
+                <i class='bx bx-message-dots'></i> <span data-i18n="nav.discussion">Doubts & Discussion</span>
+            </a>
+            <a href="#materials" class="nav-item" onclick="showSection('materials')">
+                <i class='bx bx-download'></i> <span data-i18n="nav.materials">Study Materials</span>
+            </a>
+            <a href="#career" class="nav-item" onclick="showSection('career')">
+                <i class='bx bx-briefcase'></i> <span data-i18n="nav.career">Career & Internships</span>
+            </a>
+            <a href="#feedback" class="nav-item" onclick="showSection('feedback')">
+                <i class='bx bx-clipboard'></i> <span data-i18n="nav.feedback">Feedback & Assessment</span>
+            </a>
+            <a href="#results" class="nav-item" onclick="showSection('results')">
+                <i class='bx bx-bar-chart-alt-2'></i> <span data-i18n="nav.results">Results</span>
+            </a>
+            <a href="#profile" class="nav-item" onclick="showSection('profile')">
+                <i class='bx bx-user'></i> <span data-i18n="nav.profile">Profile</span>
+            </a>
+            <a href="#" class="nav-item logout-item" onclick="logout()">
+                <i class='bx bx-log-out'></i> Logout
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <button class="menu-toggle" onclick="toggleSidebar()"><i class='bx bx-menu'></i></button>
+            <div class="top-bar-right">
+                <button class="lang-toggle" onclick="toggleLanguage()" aria-label="Toggle language">
+                    <span id="langToggleLabel">EN</span>
+                </button>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                    <i class='bx bx-moon' id="themeToggleIcon"></i>
+                </button>
+                <div class="notification-icon" onclick="toggleNotifications()">
+                    <i class='bx bx-bell'></i>
+                    <span class="notification-badge" id="notificationBadge">3</span>
+                </div>
+                <div class="user-profile-mini" onclick="showSection('profile')">
+                    <img id="userPhotoMini" class="profile-photo-img" alt="Profile photo" style="display:none;">
+                    <span id="userInitials">JD</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="dashboard-section active">
+            <!-- Welcome & Profile Summary -->
+            <div class="welcome-card">
+                <div class="welcome-content">
+                    <h1>Welcome back, <span id="studentName">Student</span>! 👋</h1>
+                    <p class="welcome-subtitle">Here's your academic overview</p>
+                </div>
+                <div class="profile-summary">
+                    <div class="profile-avatar">
+                        <img id="profilePhotoMini" class="profile-photo-img" alt="Profile photo" style="display:none;">
+                        <span id="profileInitials">JD</span>
+                    </div>
+                    <div class="profile-info">
+                        <p class="profile-email" id="profileEmail">student@example.com</p>
+                        <p class="profile-status">Active Student</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class='bx bx-clipboard'></i></div>
+                    <div class="stat-info">
+                        <h3 id="totalExams">0</h3>
+                        <p>Total Exams</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class='bx bx-trophy'></i></div>
+                    <div class="stat-info">
+                        <h3 id="averageScore">0%</h3>
+                        <p>Average Score</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class='bx bx-time-five'></i></div>
+                    <div class="stat-info">
+                        <h3 id="studyHours">0h</h3>
+                        <p>Study Hours</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class='bx bx-trending-up'></i></div>
+                    <div class="stat-info">
+                        <h3 id="rank">#--</h3>
+                        <p>Current Rank</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Announcements (from admin) -->
+            <div class="announcements-block" id="dashboardAnnouncements"></div>
+
+            <!-- Exams: schedules, completed attempts, ongoing -->
+            <div class="exams-section exams-section--dashboard">
+                <h2><i class='bx bx-calendar'></i> Exams & schedules</h2>
+                <div class="exams-strip">
+                    <h3 class="exams-strip-title"><i class='bx bx-calendar-event'></i> Upcoming Exams</h3>
+                    <p class="exams-strip-hint">Official exam and schedule announcements from your instructors (posted by admins as Exam / Schedule, or detected from the announcement text)</p>
+                    <div class="exams-scroll-wrap" aria-label="Upcoming exam announcements">
+                        <div class="exams-grid exams-grid--horizontal" id="examsGridUpcoming"></div>
+                    </div>
+                </div>
+                <div class="exams-strip">
+                    <h3 class="exams-strip-title"><i class='bx bx-badge-check'></i> Completed exams</h3>
+                    <p class="exams-strip-hint">Exams you have already attempted at least once</p>
+                    <div class="exams-scroll-wrap" aria-label="Completed exams">
+                        <div class="exams-grid exams-grid--horizontal" id="examsGridCompleted"></div>
+                    </div>
+                </div>
+                <div class="exams-strip">
+                    <h3 class="exams-strip-title"><i class='bx bx-play-circle'></i> Ongoing</h3>
+                    <p class="exams-strip-hint">Exams you can still start or reattempt</p>
+                    <div class="exams-scroll-wrap" aria-label="Ongoing exams">
+                        <div class="exams-grid exams-grid--horizontal" id="examsGridOngoing"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practice Progress -->
+            <div class="progress-section">
+                <h2><i class='bx bx-line-chart'></i> Practice Progress</h2>
+                <div class="progress-cards">
+                    <div class="progress-card">
+                        <h3>Completed Topics</h3>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="practiceProgressBar" style="width: 0%">
+                                <span id="practiceProgressLabel">0%</span>
+                            </div>
+                        </div>
+                        <p class="progress-detail">You haven't completed any topics yet. Start practicing to see your progress.</p>
+                    </div>
+                    <div class="progress-card">
+                        <h3>Weak Areas</h3>
+                        <div class="weak-areas" id="weakAreasContainer">
+                            <span class="weak-tag weak-tag-placeholder">No weak areas detected yet</span>
+                        </div>
+                        <p class="suggestion">💡 Based on your exam and practice performance. Attempt exams and topic quizzes to see topics that need more attention.</p>
+                    </div>
+                    <div class="progress-card">
+                        <h3>Achievements</h3>
+                        <div id="dashboardAchievements" class="achievements-list">
+                            <!-- Achievements will be rendered here -->
+                        </div>
+                        <p class="suggestion">🏅 Complete gamified levels and quizzes to unlock badges.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Notes -->
+            <div class="progress-section" style="margin-top: 26px;">
+                <h2><i class='bx bx-notepad'></i> Quick Notes</h2>
+                <div class="progress-cards">
+                    <div class="progress-card" style="width: 100%;">
+                        <div id="dashboardNotesPreview" style="display:flex; flex-direction:column; gap:10px;"></div>
+                        <div style="display:flex; gap:10px; margin-top: 12px; flex-wrap: wrap;">
+                            <button type="button" class="btn-primary" onclick="showSection('notes')"><i class='bx bx-notepad'></i> Open My Notes</button>
+                            <button type="button" class="secondary-btn" onclick="showSection('notes'); setTimeout(() => document.getElementById('noteContent')?.focus(), 50);"><i class='bx bx-plus'></i> Add Note</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Results & Integrity Status -->
+            <div class="results-section">
+                <div class="recent-results">
+                    <h2><i class='bx bx-history'></i> Recent Results</h2>
+                    <p class="exam-stats-insight" id="examStatsInsight" style="display:none; color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 12px;"></p>
+                    <div class="results-list" id="resultsList">
+                        <!-- Results will be dynamically inserted here -->
+                    </div>
+                </div>
+                <div class="integrity-status">
+                    <h2><i class='bx bx-shield'></i> Integrity Status</h2>
+                    <div id="integrityCard" class="integrity-card good">
+                        <i id="integrityIcon" class='bx bx-check-circle'></i>
+                        <h3 id="integrityTitle">Getting Started</h3>
+                        <p id="integrityMessage">No exam activity yet. Complete a few exams to see your integrity score.</p>
+                        <div class="integrity-score" id="integrityScore">--</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice & Exams Section -->
+        <section id="practice" class="dashboard-section">
+            <h2><i class='bx bx-clipboard'></i> Practice & Exams</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.85); margin-bottom: 16px;">Available practice tests and mock exams</p>
+            <div class="practice-exams-toolbar">
+                <div class="practice-search-wrap">
+                    <i class='bx bx-search' aria-hidden="true"></i>
+                    <input type="search" id="practiceExamSearch" placeholder="Search by exam name, subject, or keyword…" autocomplete="off" enterkeyhint="search">
+                </div>
+            </div>
+            <div class="exams-section">
+                <div class="exams-grid" id="practiceExamsGrid">
+                    <!-- Exam cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- My Notes Section -->
+        <section id="notes" class="dashboard-section">
+            <h2><i class='bx bx-notepad'></i> My Notes</h2>
+            <div class="notes-layout">
+                <div class="notes-main">
+                    <div class="notes-editor">
+                        <div class="form-row two-cols">
+                            <div>
+                                <label>Subject</label>
+                                <input type="text" id="noteSubject" placeholder="Subject name">
+                            </div>
+                            <div>
+                                <label>Topic</label>
+                                <input type="text" id="noteTopic" placeholder="Topic name">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label>Title</label>
+                            <input type="text" id="noteTitle" placeholder="Short title for this note">
+                        </div>
+                        <div class="form-row">
+                            <label>Content</label>
+                            <textarea id="noteContent" rows="6" placeholder="Write your notes here..."></textarea>
+                        </div>
+                        <div class="form-row notes-editor-actions">
+                            <label><input type="checkbox" id="noteBookmarked"> Mark as important</label>
+                            <div>
+                                <button type="button" class="secondary-btn" id="noteNewBtn">New</button>
+                                <button type="button" class="btn-primary" id="noteSaveBtn"><i class='bx bx-save'></i> Save</button>
+                                <button type="button" class="secondary-btn" id="noteDeleteBtn"><i class='bx bx-trash'></i> Delete</button>
+                            </div>
+                        </div>
+                        <input type="hidden" id="noteId">
+                    </div>
+                    <div class="notes-list" id="notesList">
+                        <!-- Notes list rendered here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gamified Learning Section -->
+        <section id="gamified" class="dashboard-section">
+            <h2><i class='bx bx-joystick'></i> Gamified Learning</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.85); margin-bottom: 20px;">
+                Unlock levels, earn points, and master subjects through short concept missions and mini-quizzes.
+            </p>
+            <div class="gamified-layout">
+                <div class="gamified-sidebar">
+                    <h3>Choose Subject</h3>
+                    <div class="gamified-subject-tabs" id="gamifiedSubjectTabs">
+                        <button type="button" class="subject-pill active" data-subject="os">Operating Systems</button>
+                        <button type="button" class="subject-pill" data-subject="dbms">DBMS</button>
+                        <button type="button" class="subject-pill" data-subject="cn">Computer Networks</button>
+                    </div>
+                    <div class="gamified-progress-card">
+                        <h4 id="gamifiedSubjectTitle">Operating Systems – Progress</h4>
+                        <div class="gamified-progress-bar-wrap">
+                            <div class="gamified-progress-bar">
+                                <div class="gamified-progress-fill" id="gamifiedLevelProgressFill"></div>
+                            </div>
+                            <span class="gamified-progress-label" id="gamifiedLevelProgressLabel">Level 1 of 3</span>
+                        </div>
+                        <div class="gamified-stats-row">
+                            <div>
+                                <span class="gamified-stat-label">Points</span>
+                                <span class="gamified-stat-value" id="gamifiedPoints">0</span>
+                            </div>
+                            <div>
+                                <span class="gamified-stat-label">Streak</span>
+                                <span class="gamified-stat-value" id="gamifiedStreak">0 days</span>
+                            </div>
+                        </div>
+                        <div class="gamified-badges" id="gamifiedBadges">
+                            <!-- Badges will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="gamified-main">
+                    <div id="gamifiedLevelsContainer">
+                        <!-- Level cards will be rendered here -->
+                    </div>
+                    <div class="gamified-quiz-panel">
+                        <h3 id="gamifiedQuizTitle">Level Quiz</h3>
+                        <div id="gamifiedQuizContainer"></div>
+                        <div id="gamifiedQuizResult" class="quiz-result" style="display:none;"></div>
+                        <button type="button" id="gamifiedQuizSubmitBtn" class="btn-primary" style="display:none;">
+                            <i class='bx bx-send'></i> Submit answers
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Doubts & Discussion Section -->
+        <section id="discussion" class="dashboard-section">
+            <h2><i class='bx bx-message-dots'></i> <span data-i18n="section.doubts">Doubts & Discussion</span></h2>
+            <div class="discussion-layout">
+                <div class="ask-doubt-card">
+                    <h3>Ask a Question</h3>
+                    <form id="doubtForm" onsubmit="submitDoubt(event)">
+                        <textarea id="doubtQuestion" placeholder="Type your doubt or question here..." rows="4" required></textarea>
+                        <select id="doubtCategory" class="doubt-select">
+                            <option value="Study related">Study related</option>
+                            <option value="Exam related">Exam related</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <button type="submit" class="btn-primary"><i class='bx bx-send'></i> Post Question</button>
+                    </form>
+                </div>
+                <div class="discussion-feed">
+                    <h3>Recent Questions & Answers</h3>
+                    <div class="discussion-list" id="discussionList"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Study Materials Section -->
+        <section id="materials" class="dashboard-section">
+            <h2><i class='bx bx-download'></i> <span data-i18n="section.materials">Study Materials</span></h2>
+            <div class="materials-tabs">
+                <button class="material-tab active" data-tab="notes" onclick="switchMaterialTab('notes')">Revision Notes</button>
+                <button class="material-tab" data-tab="lectures" onclick="switchMaterialTab('lectures')">Recorded Lectures</button>
+                <button class="material-tab" data-tab="resources" onclick="switchMaterialTab('resources')">Resources</button>
+            </div>
+            <div class="materials-content">
+                <div class="materials-panel active" id="materialsNotes">
+                    <div class="materials-grid" id="notesGrid"></div>
+                </div>
+                <div class="materials-panel" id="materialsLectures">
+                    <div class="materials-grid" id="lecturesGrid"></div>
+                </div>
+                <div class="materials-panel" id="materialsResources">
+                    <div class="materials-grid" id="resourcesGrid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career & Internships Section -->
+        <section id="career" class="dashboard-section">
+            <h2><i class='bx bx-briefcase'></i> <span data-i18n="section.career">Career & Internship Guidance</span></h2>
+            <p class="career-section-desc">Practical guidance, live opportunities, and quick access to job platforms.</p>
+            <div class="career-layout">
+                <div class="career-tips-card">
+                    <h3><i class='bx bx-bulb'></i> Career Guidance Tips</h3>
+                    <p class="career-card-hint">Build your profile and prepare for placements.</p>
+                    <ul class="career-tips-list" id="careerTipsList"></ul>
+                </div>
+                <div class="internships-card">
+                    <h3><i class='bx bx-briefcase-alt'></i> Live Internship Opportunities</h3>
+                    <p class="career-card-hint">Updated opportunities — apply on the platform.</p>
+                    <div class="internships-list" id="internshipsList"></div>
+                </div>
+                <div class="career-resources-card">
+                    <h3><i class='bx bx-link'></i> Useful Links — Job Platforms</h3>
+                    <p class="career-card-hint">Open in a new tab to search and apply.</p>
+                    <div class="career-platform-buttons" id="careerPlatformButtons"></div>
+                    <div class="career-links" id="careerLinks"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback & Self-Assessment Section -->
+        <section id="feedback" class="dashboard-section">
+            <h2><i class='bx bx-clipboard'></i> Feedback & Self-Assessment</h2>
+            <p class="feedback-section-desc">Share feedback to improve the platform and track your learning progress.</p>
+
+            <div class="feedback-layout">
+                <div class="feedback-form-card">
+                    <h3><i class='bx bx-message-detail'></i> Send Feedback</h3>
+                    <p class="card-hint">Rate your experience, choose a category, and share suggestions or report issues.</p>
+                    <form id="feedbackForm" onsubmit="submitFeedback(event)">
+                        <label for="feedbackCategory">Category</label>
+                        <div class="custom-select-wrap" id="feedbackCategoryWrap">
+                            <select id="feedbackCategory" aria-hidden="true" tabindex="-1">
+                                <option value="Study Materials">Study Materials</option>
+                                <option value="Doubt Support">Doubt Support</option>
+                                <option value="Exams">Exams</option>
+                                <option value="Career Section">Career Section</option>
+                                <option value="Technical Issues">Technical Issues</option>
+                            </select>
+                            <button type="button" class="custom-select-trigger" id="feedbackCategoryTrigger" aria-expanded="false" aria-haspopup="listbox">
+                                <span class="custom-select-value">Study Materials</span>
+                                <i class='bx bx-chevron-down custom-select-arrow'></i>
+                            </button>
+                            <div class="custom-select-dropdown" id="feedbackCategoryDropdown" role="listbox">
+                                <div class="custom-select-option" data-value="Study Materials" role="option">Study Materials</div>
+                                <div class="custom-select-option" data-value="Doubt Support" role="option">Doubt Support</div>
+                                <div class="custom-select-option" data-value="Exams" role="option">Exams</div>
+                                <div class="custom-select-option" data-value="Career Section" role="option">Career Section</div>
+                                <div class="custom-select-option" data-value="Technical Issues" role="option">Technical Issues</div>
+                            </div>
+                        </div>
+                        <div class="rating-row">
+                            <label>Rate your experience (1–5 stars)</label>
+                            <div class="star-rating" id="feedbackRating">
+                                <span data-rating="1">☆</span><span data-rating="2">☆</span><span data-rating="3">☆</span><span data-rating="4">☆</span><span data-rating="5">☆</span>
+                            </div>
+                        </div>
+                        <label for="feedbackMessage">Your feedback / suggestions / problem</label>
+                        <textarea id="feedbackMessage" placeholder="Share your suggestions or describe any issue in detail..." rows="4" required></textarea>
+                        <button type="submit" class="btn-primary"><i class='bx bx-send'></i> Submit Feedback</button>
+                    </form>
+                </div>
+                <div class="feedback-history-card">
+                    <h3><i class='bx bx-history'></i> My Feedback</h3>
+                    <p class="card-hint">Your previous submissions and their status.</p>
+                    <div class="feedback-history-list" id="feedbackHistoryList"></div>
+                </div>
+            </div>
+
+            <div class="self-assessment-section">
+                <h3 class="subsection-title"><i class='bx bx-trending-up'></i> Self-Assessment</h3>
+                <div class="self-assessment-card-only">
+                    <p class="card-hint">Rate your confidence in key areas (1–5). We use this to suggest focus areas.</p>
+                    <form id="selfAssessmentForm" onsubmit="submitSelfAssessment(event)">
+                        <div class="assessment-item">
+                            <label>Subject understanding</label>
+                            <input type="range" min="1" max="5" value="3" name="subject" id="assessSubject">
+                            <span class="range-value" id="assessSubjectVal">3</span>
+                        </div>
+                        <div class="assessment-item">
+                            <label>Exam readiness</label>
+                            <input type="range" min="1" max="5" value="3" name="readiness" id="assessReadiness">
+                            <span class="range-value" id="assessReadinessVal">3</span>
+                        </div>
+                        <div class="assessment-item">
+                            <label>Time management</label>
+                            <input type="range" min="1" max="5" value="3" name="timeMgmt" id="assessTimeMgmt">
+                            <span class="range-value" id="assessTimeMgmtVal">3</span>
+                        </div>
+                        <button type="submit" class="btn-primary">Save Self-Assessment</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="dashboard-section">
+            <h2>All Results</h2>
+            <div class="results-table-container">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Exam Name</th>
+                            <th>Date</th>
+                            <th>Score</th>
+                            <th>Rank</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsTableBody">
+                        <!-- Results will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="dashboard-section">
+            <h2>My Profile</h2>
+            <div class="profile-card-full">
+                <div class="profile-header-full">
+                    <label class="profile-avatar-large photo-upload-label" id="profilePhotoUploadLabel">
+                        <img id="profilePhotoLarge" class="profile-photo-img" alt="Profile photo" style="display:none;">
+                        <span id="profileInitialsLarge">JD</span>
+                        <div class="photo-upload-overlay" aria-hidden="true">
+                            <i class='bx bx-camera'></i>
+                            <span>Change</span>
+                        </div>
+                        <input type="file" id="studentPhotoUpload" accept="image/*" hidden>
+                    </label>
+                    <h3 id="profileNameFull">Student Name</h3>
+                    <p id="profileEmailFull">student@example.com</p>
+                </div>
+                <div class="profile-details">
+                    <div class="detail-item">
+                        <label>Student ID</label>
+                        <p>STU-2024-001</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Total Exams Taken</label>
+                        <p id="profileTotalExams">0</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Average Score</label>
+                        <p id="profileAvgScore">0%</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Current Rank</label>
+                        <p id="profileRank">#--</p>
+                    </div>
+                </div>
+
+                <p class="form-hint" style="text-align:center; margin-top: 18px;">
+                    Click your profile photo to upload or update it.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Exam Modal (GATE/JEE Style) -->
+    <div class="exam-modal" id="examModal" style="display:none;">
+        <div class="exam-modal-card">
+            <!-- Top Header with Timer -->
+            <div class="exam-modal-header">
+                <div class="exam-header-left">
+                    <h3 id="examModalTitle">Exam</h3>
+                    <p class="exam-modal-subtitle" id="examModalSubtitle">Practice / Mock</p>
+                </div>
+                <div class="exam-header-right">
+                    <div class="exam-timer-container">
+                        <i class='bx bx-time-five'></i>
+                        <span class="exam-timer" id="examTimer">00:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Warning Banner -->
+            <div class="exam-warning" id="examWarning" style="display:none;"></div>
+
+            <!-- Main Exam Body: Camera (left, mock only) + Palette + Question Area -->
+            <div class="exam-modal-body">
+                <!-- Camera Sidebar (Mock Tests Only - left side) -->
+                <div class="exam-camera-sidebar" id="examCameraRow" style="display:none;">
+                    <div class="exam-camera-card">
+                        <h4><i class='bx bx-camera'></i> Camera (Mock Test)</h4>
+                        <p>Camera must remain ON during the exam.</p>
+                        <video id="examCameraPreview" autoplay muted playsinline></video>
+                        <div class="exam-camera-status" id="examCameraStatus">Waiting for camera permission...</div>
+                    </div>
+                </div>
+
+                <!-- Right side: Question Palette + Question Area -->
+                <div class="exam-body-right">
+                <!-- Question Palette Sidebar -->
+                <div class="exam-palette-sidebar">
+                    <div class="palette-header">
+                        <h4><i class='bx bx-list-ul'></i> Question Palette</h4>
+                        <div class="palette-stats">
+                            <span id="paletteAnswered">0</span> Answered | 
+                            <span id="paletteNotVisited">0</span> Not Visited | 
+                            <span id="paletteMarked">0</span> Marked
+                        </div>
+                    </div>
+                    <div class="palette-grid" id="questionPalette">
+                        <!-- Question numbers will be dynamically inserted here -->
+                    </div>
+                </div>
+
+                <!-- Question Display Area -->
+                <div class="exam-question-area">
+                    <div class="question-display" id="questionDisplay">
+                        <!-- Single question will be displayed here -->
+                    </div>
+
+                    <!-- Navigation Controls -->
+                    <div class="question-navigation">
+                        <button class="nav-btn prev-btn" id="prevQuestionBtn" onclick="navigateQuestion(-1)">
+                            <i class='bx bx-chevron-left'></i> Previous
+                        </button>
+                        <div class="question-counter">
+                            <span id="currentQuestionNum">1</span> of <span id="totalQuestions">0</span>
+                        </div>
+                        <button class="nav-btn next-btn" id="nextQuestionBtn" onclick="navigateQuestion(1)">
+                            Next <i class='bx bx-chevron-right'></i>
+                        </button>
+                    </div>
+
+                    <!-- Mark for Review Checkbox -->
+                    <div class="mark-review-section">
+                        <label class="mark-review-label">
+                            <input type="checkbox" id="markForReview" onchange="toggleMarkForReview()">
+                            <span>Mark for Review</span>
+                        </label>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="exam-modal-footer">
+                <button class="btn-danger" type="button" onclick="cancelExam()">
+                    <i class='bx bx-x-circle'></i> Cancel Exam
+                </button>
+                <button class="btn-primary" type="button" onclick="confirmSubmitExam()">
+                    <i class='bx bx-check'></i> Submit Exam
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Exam confirm popup (submit/cancel) – styled like project -->
+    <div class="exam-confirm-overlay" id="examConfirmOverlay" style="display:none;">
+        <div class="exam-confirm-card">
+            <div class="exam-confirm-icon" id="examConfirmIcon"><i class='bx bx-info-circle'></i></div>
+            <h3 class="exam-confirm-title" id="examConfirmTitle">Confirm</h3>
+            <p class="exam-confirm-message" id="examConfirmMessage"></p>
+            <div class="exam-confirm-actions">
+                <button type="button" class="btn-secondary" id="examConfirmNo">No, go back</button>
+                <button type="button" class="btn-primary" id="examConfirmYes"><i class='bx bx-check'></i> Yes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Study Assistant: Floating Chat Button -->
+    <button type="button" class="ai-study-fab" id="aiStudyFab" onclick="toggleAIStudyChat()" aria-label="Open AI Study Assistant">
+        <i class='bx bx-bot'></i>
+        <span class="ai-study-fab-label">Study AI</span>
+    </button>
+
+    <!-- AI Study Chat Panel -->
+    <div class="ai-study-panel" id="aiStudyPanel">
+        <div class="ai-study-header">
+            <h3><i class='bx bx-bot'></i> AI Study Assistant</h3>
+            <button type="button" onclick="toggleAIStudyChat()" aria-label="Close"><i class='bx bx-x'></i></button>
+        </div>
+        <div class="ai-study-messages" id="aiStudyMessages">
+            <div class="ai-study-welcome" id="aiStudyWelcome">
+                <p>Hi! I'm your study assistant. Ask me anything related to study</p>
+            </div>
+        </div>
+        <div class="ai-study-input-wrap">
+            <textarea id="aiStudyInput" placeholder="Ask a study question..." rows="2" maxlength="2000"></textarea>
+            <button type="button" class="ai-study-send" id="aiStudySendBtn" onclick="sendAIStudyQuestion()" aria-label="Send">
+                <i class='bx bx-send'></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Notifications Panel -->
+    <div class="notifications-panel" id="notificationsPanel">
+        <div class="notifications-header">
+            <h3>Notifications</h3>
+            <button onclick="toggleNotifications()"><i class='bx bx-x'></i></button>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+            <!-- Notifications will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script src="alert.js"></script>
+</body>
+</html>

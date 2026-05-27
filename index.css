@@ -1,0 +1,808 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100%;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.background {
+    background: url(backgroun3.jpg) no-repeat center center/cover;
+    height: 100vh;
+    width: 100%;
+    filter: blur(5px) brightness(0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    animation: subtleZoom 20s ease-in-out infinite alternate;
+}
+
+@keyframes subtleZoom {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.05);
+    }
+}
+
+
+/* TOP NAVBAR (OUTSIDE MAIN BOX) */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+    z-index: 6;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 18px 52px; /* taller & wider */
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(10px);
+}
+
+.navbar a {
+    font-size: 16px; /* bigger text */
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    transition: 0.2s ease-in-out;
+    position: relative;
+    padding-bottom: 2px;
+}
+
+/* Right-side ExamEase logo in navbar */
+.nav-logo {
+    margin-left: auto;            /* push to right side */
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.nav-logo i {
+    font-size: 22px;
+    color: #4ed442;
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #4ed442;
+    transition: width 0.25s ease;
+}
+
+.navbar a:hover::after {
+    width: 100%;
+}
+
+.navbar a:hover {
+    color: #ffffff;
+}
+
+/* CONTAINER */
+.container {
+    position: relative;
+    width: 71.25%;
+    max-width: 855px;
+    min-height: 551px;
+    background: url(backgroun3.jpg) no-repeat center/cover;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 28.5px;
+    box-sizing: border-box;
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.45),
+                0 0 0 1px rgba(255, 255, 255, 0.08);
+    animation: fadeInUp 0.8s ease-out;
+    margin-top: 38px;
+}
+
+
+
+@keyframes cornerFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Section Divider */
+.section-divider {
+    position: absolute;
+    left: 58%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 70%;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    z-index: 4;
+    pointer-events: none;
+    animation: dividerFadeIn 1s ease-out 0.7s both;
+}
+
+@keyframes dividerFadeIn {
+    from {
+        opacity: 0;
+        height: 0;
+    }
+    to {
+        opacity: 1;
+        height: 70%;
+    }
+}
+
+.section-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: rgba(78, 212, 66, 0.4);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(78, 212, 66, 0.4);
+    animation: pulse 3.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* LEFT SIDE */
+.item {
+    width: 55.1%;
+    padding: 57px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.item::before {
+    content: '';
+    position: absolute;
+    top: -28px;
+    left: -28px;
+    right: -28px;
+    bottom: -28px;
+    background: radial-gradient(circle at top left, rgba(23, 75, 189, 0.22), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(78, 212, 66, 0.16), transparent 55%);
+    pointer-events: none;
+}
+
+.item .logo {
+    font-size: 20.9px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 1s ease-out 0.2s both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.text-item {
+    position: relative;
+    z-index: 1;
+}
+
+.text-item h2 {
+    font-size: 34px;
+    line-height: 1.2;
+    margin-left: -68px;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+    animation: fadeIn 1s ease-out 0.4s both;
+}
+
+.text-item h2 span {
+    font-size: 0.7em;
+    font-weight: 400;
+    opacity: 0.9;
+    display: block;
+    margin-top: 4px;
+}
+
+.text-item p {
+    font-size: 13.5px;
+    margin: 15px 0;
+    margin-left: -68px;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 1s ease-out 0.6s both;
+    line-height: 1.6;
+}
+
+.social-icon {
+    position: relative;
+    z-index: 1;
+    animation: fadeIn 1s ease-out 0.8s both;
+}
+
+.social-icon a {
+    display: inline-block;
+    margin-right: 15px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.social-icon a i {
+    color: #fff;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+}
+
+.social-icon a:hover {
+    transform: translateY(-3px);
+}
+
+.social-icon a:hover i {
+    transform: scale(1.1);
+    color: #4ed442;
+    filter: drop-shadow(0 3px 8px rgba(78, 212, 66, 0.45));
+}
+
+/* LOGIN SECTION */
+.login-section {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 42%;
+    height: 100%;
+    backdrop-filter: blur(18px) saturate(160%);
+    background: rgba(15, 20, 40, 0.72);
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -8px 0 26px rgba(0, 0, 0, 0.35);
+}
+
+/* FORM BOX */
+.form-box {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-section .form-box.login {
+    transform: translateX(0);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+    opacity: 1;
+}
+
+.login-section .form-box.register {
+    transform: translateX(338px);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+    opacity: 0;
+}
+
+.login-section.active .form-box.register {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.login-section.active .form-box.login {
+    transform: translateX(338px);
+    opacity: 0;
+}
+
+/* FORM */
+.form-box form {
+    width: 100%;
+    max-width: 247px;
+    text-align: center;
+    background: radial-gradient(circle at top, rgba(255, 255, 255, 0.06), transparent 70%),
+                rgba(7, 10, 24, 0.88);
+    padding: 26px 19px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(14px);
+    position: relative;
+}
+
+
+
+.form-header {
+    margin-bottom: 18px;
+}
+
+.form-box h2 {
+    font-size: 18.05px;
+    margin-bottom: 6px;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.form-subtitle {
+    font-size: 9.5px;
+    color: rgba(255, 255, 255, 0.92);
+    margin: 0;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+/* Role toggle (Student / Admin) */
+.role-toggle {
+    display: inline-flex;
+    margin-top: 8px;
+    padding: 3px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.role-toggle button {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 9px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.role-toggle button.active {
+    background: linear-gradient(135deg, #174bbd, #4ed442);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(23, 75, 189, 0.6);
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+/* Signup role select */
+.role-select {
+    text-align: left;
+    margin-top: 4px;
+}
+
+.role-select label {
+    display: block;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 4px;
+}
+
+.role-select select {
+    width: 100%;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(7, 10, 24, 0.9);
+    color: #fff;
+    font-size: 11px;
+    outline: none;
+}
+
+.input-box {
+    position: relative;
+    width: 100%;
+    height: 36.1px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    margin: 22px 0;
+    transition: all 0.3s ease;
+}
+
+.input-box::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #174bbd, #4ed442);
+    transition: width 0.3s ease;
+}
+
+.input-box:focus-within {
+    border-bottom-color: transparent;
+}
+
+.input-box:focus-within::before {
+    width: 100%;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 11.4px;
+    padding-right: 21px;
+    padding-left: 4px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.input-box input:focus {
+    padding-left: 8px;
+}
+
+.input-box label {
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    transform: translateY(-50%);
+    font-size: 12px;
+    font-weight: 500;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.input-box .icon {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.92);
+    transition: all 0.3s ease;
+}
+
+.input-box:focus-within .icon {
+    color: #4ed442;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+    top: -4px;
+    color: #4ed442;
+    font-size: 10px;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(78, 212, 66, 0.3);
+}
+
+/* REMEMBER PASSWORD */
+.remember-password {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: white;
+    margin-bottom: 11px;
+}
+
+.remember-password label input {
+    accent-color: #fff;
+    margin-right: 5px;
+}
+
+.remember-password a {
+    color: white;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.remember-password a:hover {
+    color: #4ed442;
+}
+
+/* BUTTON */
+.btn {
+    width: 100%;
+    height: 34px;
+    background: linear-gradient(135deg, #174bbd 0%, #1e5cd4 100%);
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px rgba(23, 75, 189, 0.35);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #1e5cd4 0%, #174bbd 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(23, 75, 189, 0.6);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(23, 75, 189, 0.4);
+}
+
+/* CREATE ACCOUNT */
+.create-account {
+    font-size: 11px;
+    text-align: center;
+    margin-top: 19px;
+    color: white;
+}
+
+.create-account p a {
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 2px 0;
+}
+
+.create-account p a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #4ed442;
+    transition: width 0.3s ease;
+}
+
+.create-account p a:hover {
+    color: #4ed442;
+    transform: translateX(3px);
+}
+
+.create-account p a:hover::after {
+    width: 100%;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .item {
+        width: 100%;
+        padding: 40px;
+    }
+
+    .login-section {
+        width: 100%;
+        position: relative;
+    }
+
+    .login-section .form-box {
+        width: 100%;
+    }
+
+    .section-divider {
+        display: none;
+    }
+
+    .corner-decoration {
+        width: 40px;
+        height: 40px;
+    }
+
+    .corner-decoration.top-left,
+    .corner-decoration.top-right,
+    .corner-decoration.bottom-left,
+    .corner-decoration.bottom-right {
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 25px;
+    }
+
+    .text-item h2 {
+        font-size: 32px;
+        margin-left: 0;
+    }
+
+    .text-item p {
+        margin-left: 0;
+    }
+
+    .form-box form {
+        width: 100%;
+        max-width: 300px;
+        padding: 25px 20px;
+    }
+
+    .form-box h2 {
+        font-size: 22px;
+    }
+
+    .form-subtitle {
+        font-size: 12px;
+    }
+
+    .input-box input {
+        font-size: 14px;
+    }
+
+    .btn {
+        font-size: 14px;
+    }
+
+    .corner-decoration {
+        width: 30px;
+        height: 30px;
+    }
+}
+.error-message {
+    color: white;
+    font-size: 10px;
+    text-align: center;
+    margin-top: 4px;
+    min-height: 15px;
+    padding: 4px;
+    border-radius: 5px;
+    background: rgba(220, 53, 69, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Password strength container */
+.password-strength-container {
+    margin: 11px 0 15px;
+    padding: 9px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Password strength bar styling */
+#strength-bar {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    margin: 0 0 8px 0;
+    display: block;
+}
+
+#strength-bar::-webkit-progress-bar {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+#strength-bar::-webkit-progress-value {
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    background: linear-gradient(90deg, #174bbd, #4ed442);
+}
+
+#strength-text {
+    margin: 0;
+    font-weight: 500;
+    font-size: 9px;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+
+/* Password toggle icon enhancement */
+.password-toggle {
+    transition: all 0.3s ease;
+    opacity: 0.7;
+    font-size: 14px;
+    z-index: 10;
+}
+
+.password-toggle:hover {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.15);
+}
+
+.password-toggle:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Remember password checkbox enhancement */
+.remember-password label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.remember-password label:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.remember-password input[type="checkbox"] {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    accent-color: #4ed442;
+    transition: all 0.3s ease;
+}
+
+.remember-password input[type="checkbox"]:hover {
+    transform: scale(1.1);
+}

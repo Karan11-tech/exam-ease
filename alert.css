@@ -1,0 +1,31 @@
+.alert-box {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 280px;
+    max-width: 520px;
+    padding: 14px 26px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    color: #fff;
+    text-align: center;
+    display: none;
+    z-index: 9999;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(14px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.alert-success {
+    /* Match ExamEase blue/green gradient */
+    background: linear-gradient(135deg, #174bbd 0%, #1e5cd4 50%, #4ed442 100%) !important;
+}
+
+.alert-error {
+    /* Softer error using same color family */
+    background: linear-gradient(135deg, #4e1b1b 0%, #b03030 40%, #ff5c5c 100%) !important;
+}

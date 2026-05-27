@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - ExamEase</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,500&display=swap');
+        body {
+    font-family: "poppins",sans-serif;
+    margin: 0;
+    padding: 0;
+    color: white;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(backgroun3.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(4px);
+    z-index: -2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+}
+
+header {
+    text-align: center;
+    font-family: "poppins",sans-serif;
+
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+nav ul {
+    font-family: "poppins",sans-serif;
+
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    font-family: "poppins",sans-serif;
+
+    display: inline;
+    margin: 0 15px;
+}
+
+
+nav ul li a {
+    font-family: "poppins",sans-serif;
+
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+nav ul li a:hover {
+    
+    color: #4ed442;
+}
+.contact-content, .help-content {
+    padding: 40px;
+    text-align: center;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: auto;
+}
+
+form input, form textarea {
+    margin: 10px 0;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+form button {
+    background: #174bbd;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+details {
+    margin: 12px 0;
+    padding: 14px 18px;
+    background: rgba(15, 20, 40, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+details summary {
+    cursor: pointer;
+    font-weight: 500;
+    color: #fff;
+}
+details p {
+    margin: 12px 0 0 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Chatbot — aligned with project theme */
+.chatbot-section {
+    max-width: 640px;
+    margin: 40px auto 60px;
+    padding: 0 20px;
+}
+.chatbot-section h2 {
+    color: #4ed442;
+    margin-bottom: 8px;
+    font-size: 22px;
+}
+.chatbot-section .chatbot-desc {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+.chatbot-card {
+    background: rgba(15, 20, 40, 0.85);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+}
+.chatbot-messages {
+    height: 320px;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.chatbot-messages::-webkit-scrollbar {
+    width: 6px;
+}
+.chatbot-messages::-webkit-scrollbar-thumb {
+    background: rgba(78, 212, 66, 0.3);
+    border-radius: 3px;
+}
+.chat-msg {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.chat-msg.bot {
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
+}
+.chat-msg.user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #174bbd, #4ed442);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(78, 212, 66, 0.25);
+}
+.chat-msg .label {
+    font-size: 11px;
+    opacity: 0.85;
+    margin-bottom: 4px;
+}
+.chatbot-input-row {
+    display: flex;
+    gap: 10px;
+    padding: 16px 20px;
+    background: rgba(0, 0, 0, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.chatbot-input-row input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    font-size: 14px;
+    font-family: inherit;
+}
+.chatbot-input-row input::placeholder {
+    color: rgba(255, 255, 255, 0.72);
+}
+.chatbot-input-row input:focus {
+    outline: none;
+    border-color: #4ed442;
+    box-shadow: 0 0 0 2px rgba(78, 212, 66, 0.2);
+}
+.chatbot-send {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #174bbd, #4ed442);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.chatbot-send:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(78, 212, 66, 0.4);
+}
+.chatbot-send:active {
+    transform: translateY(0);
+}
+
+.about-content {
+    font-family: "poppins",sans-serif;
+
+    padding: 40px;
+    text-align: center;
+}
+
+
+.about-content h2 {
+    font-family: "poppins",sans-serif;
+
+    color: #174bbd;
+}
+
+.about-content ul {
+    font-family: "poppins",sans-serif;
+
+    list-style: none;
+    padding: 0;
+}
+
+.about-content ul li {
+    font-family: "poppins",sans-serif;
+
+    background: #174bbd;
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+footer {
+    font-family: "poppins",sans-serif;
+
+    text-align: center;
+    padding: 50px;
+    background: rgba(0, 0, 0, 0.2);
+}
+section h2{
+    color: #4ed442;
+}
+</style>
+</head>
+<body>
+    <header>
+        <h1>Help & Support</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="help-content">
+        <h2>Frequently Asked Questions</h2>
+        <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin-bottom: 20px;">Short answers to the most common questions.</p>
+
+        <details>
+            <summary>How do I reset my password?</summary>
+            <p>On the login page, click "Forgot Password," enter your email, complete the OTP verification, then set your new password.</p>
+        </details>
+
+        <details>
+            <summary>How can I download study materials?</summary>
+            <p>Log in to the Student Dashboard, open the Study Materials section, and use Preview or Download on any material. PDFs are generated when you download.</p>
+        </details>
+
+        <details>
+            <summary>How do I contact admin for doubts?</summary>
+            <p>Use the "Doubts & Discussion" section on the Student Dashboard to post your question. Admins reply from the Admin Dashboard; you'll see answers in the same section and get a notification.</p>
+        </details>
+    </section>
+
+    <section class="chatbot-section">
+        <h2>Support Chatbot</h2>
+        <p class="chatbot-desc">You can ask me anything about the platform.</p>
+        <div class="chatbot-card">
+            <div class="chatbot-messages" id="chatbotMessages"></div>
+            <div class="chatbot-input-row">
+                <input type="text" id="chatbotInput" placeholder="Type your question..." autocomplete="off">
+                <button type="button" class="chatbot-send" id="chatbotSend">Send</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 ExamEase. All rights reserved.</p>
+    </footer>
+
+    <script>
+(function () {
+    var messagesEl = document.getElementById("chatbotMessages");
+    var inputEl = document.getElementById("chatbotInput");
+    var sendBtn = document.getElementById("chatbotSend");
+
+    function escapeHtml(s) {
+        if (!s) return "";
+        var div = document.createElement("div");
+        div.textContent = s;
+        return div.innerHTML;
+    }
+
+    function addMessage(text, isUser) {
+        var div = document.createElement("div");
+        div.className = "chat-msg " + (isUser ? "user" : "bot");
+        div.innerHTML = "<span class=\"label\">" + (isUser ? "You" : "ExamEase") + "</span> " + escapeHtml(text);
+        messagesEl.appendChild(div);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function getBotResponse(query) {
+        var q = (query || "").toLowerCase().trim();
+        if (!q) return "Please type a question about the ExamEase platform (e.g. login, study materials, career, doubts).";
+
+        // Login / password / signup
+        if (/\b(reset|forgot|change)\b.*\b(password|pass)\b|\bpassword\b.*\b(reset|forgot)\b/.test(q))
+            return "Go to the login page and click \"Forgot Password.\" Enter your email, complete OTP verification, then set your new password.";
+        if (/\b(login|log in|sign in)\b.*\b(issue|problem|not working|can't|cannot)\b|\b(issue|problem)\b.*\b(login|log in)\b/.test(q))
+            return "Make sure you're using the email you signed up with. If you see \"User not found,\" sign up first. For \"Incorrect password,\" use Forgot Password to reset. Clear cache or try in a private window if the page behaves oddly.";
+        if (/\b(sign up|register|signup)\b/.test(q))
+            return "On the login page, click \"Sign Up,\" enter name, email, and password, choose Student or Admin, then verify your email with the OTP sent to you.";
+
+        // Dashboard & navigation
+        if (/\b(dashboard|navigate|navigation|where (is|to find)|sidebar)\b/.test(q))
+            return "After login, you land on your dashboard. Use the sidebar on the left to jump to sections: Study Materials, Doubts & Discussion, Career & Internship, Feedback, etc. Students and admins see different menus.";
+
+        // Study materials
+        if (/\b(study material|study materials|materials|notes|lectures|resources)\b/.test(q)) {
+            if (/\b(download|get|access|open|view|preview)\b/.test(q))
+                return "In the Student Dashboard, open \"Study Materials.\" You can filter by Notes, Lectures, or Resources. Use Preview to view or Download to get a PDF. Downloads are generated when you click Download.";
+            return "Study materials are in the Student Dashboard under \"Study Materials.\" You can preview or download PDFs. New uploads show as a notification when you open the dashboard.";
+        }
+
+        // Career & internship
+        if (/\b(career|internship|internships|job|jobs)\b/.test(q))
+            return "In the Student Dashboard, go to \"Career & Internship Guidance.\" You'll find career tips, live internship opportunities with \"Apply Now\" (opens LinkedIn, Internshala, Naukri, Indeed in a new tab), and useful links to these job platforms.";
+
+        // Doubts & contact admin
+        if (/\b(doubt|doubts|question|ask|submit)\b/.test(q) && !/\b(contact|admin)\b/.test(q))
+            return "Open \"Doubts & Discussion\" in the Student Dashboard. Type your question, choose a category (Study related, Exam related, or Other), and click Post Question. Admins answer from the Admin Dashboard; you'll see replies in the same section and get a notification.";
+        if (/\b(contact|admin|support|help|reach)\b/.test(q))
+            return "For doubts: use the Doubts & Discussion section on the dashboard—admins reply there. For other support: use the Contact page form or the email given on the Contact page.";
+
+        // Default
+        return "I can help with login, password reset, dashboard navigation, study materials (preview/download), career & internships, and submitting doubts. Try asking something like: \"How do I download study materials?\" or \"Where do I ask doubts?\"";
+    }
+
+    function sendUserMessage() {
+        var text = (inputEl.value || "").trim();
+        if (!text) return;
+        addMessage(text, true);
+        inputEl.value = "";
+        var reply = getBotResponse(text);
+        setTimeout(function () { addMessage(reply, false); }, 400);
+    }
+
+    sendBtn.addEventListener("click", sendUserMessage);
+    inputEl.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") { e.preventDefault(); sendUserMessage(); }
+    });
+
+    addMessage("Hi! I'm the ExamEase support bot. Ask me about login, study materials, career section, doubts, or how to use the dashboard.", false);
+})();
+    </script>
+
+</body>
+</html>
