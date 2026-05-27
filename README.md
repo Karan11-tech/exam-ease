@@ -1,26 +1,18 @@
 What it does
+
 -ExamEase is a web-based platform for online exams, learning, and assessment in one place.
 
 For students
 
 -Sign up / login with OTP email verification and role-based access (Student / Admin).
-
 -Take online exams with practice mode and results tracking.
-
 -Gamified learning, personal notes, and downloadable study materials.
-
 -Doubts & discussion forum
-
 -Career & internships section
-
 -Feedback & assessment
-
 -Exam integrity monitoring (integrity score based on violations)
-
 -AI Study Assistant (powered by Google Gemini)
-
 -Certificates (PDF generation)
-
 -Profile photos, notifications, dark/light theme, and language toggle
 
 For admins
